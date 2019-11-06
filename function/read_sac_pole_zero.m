@@ -49,21 +49,21 @@ function [zz,pp,constant] = read_sac_pole_zero(pole_zero_file_name)
         % check to make sure it isn't the end of the file
         if (buff ~= -1)
             %assume first line is ZEROS nzeros
-%           tmp = sscanf(buff, '%s" "%d');
-            if (strcmp(buff(1),'*'))
-            elseif (strcmp(buff(1),'#'))
-            elseif (strcmp(buff(1),'%'))
-            elseif strcmp(buff(1), 'Z')
+            tmp = sscanf(buff, '%s" "%d');
+            if (strcmp(tmp,'*'))
+            elseif (strcmp(tmp,'#'))
+            elseif (strcmp(tmp,'%'))
+            elseif strcmp(tmp, 'ZEROS')
                 zero_scan_flag = 1;
                 pole_scan_flag = 0;
                 tmp = sscanf(buff, '%s %d');
                 nzeros = tmp(6);
-            elseif strcmp(buff(1), 'P')
+            elseif strcmp(tmp, 'POLES')
                 pole_scan_flag = 1;
                 zero_scan_flag = 0;
                 tmp = sscanf(buff,'%s %d');
                 npoles = tmp(6);
-            elseif strcmp(buff(1), 'C')
+            elseif strcmp(tmp, 'CONSTANT')
                 pole_scan_flag = 0;
                 tmp = sscanf(buff, '%s %e');
                 constant = tmp(9);
@@ -72,9 +72,8 @@ function [zz,pp,constant] = read_sac_pole_zero(pole_zero_file_name)
                     tmp = sscanf(buff,'%f %f');
                     zero_count_flag = zero_count_flag + 1;
                     if (zero_count_flag > 1)
-                        n=zero_count_flag-1;
-                        z1(n)=tmp(1);
-                        z2(n)=tmp(2);
+                        j=zero_count_flag-1;
+                        zz(j) = tmp(1) + tmp(2)*i;
                     end
                 end
             elseif (pole_scan_flag == 1) 
@@ -82,33 +81,23 @@ function [zz,pp,constant] = read_sac_pole_zero(pole_zero_file_name)
                     tmp = sscanf(buff, '%f %f');
                     pole_count_flag = pole_count_flag + 1;
                     if (pole_count_flag > 1) 
-                        n=pole_count_flag-1;
-                        p1(n)=tmp(1);
-                        p2(n)=tmp(2);
+                        j=pole_count_flag-1;
+                        pp(j) = tmp(1) + tmp(2)*i;
                     end
                 end
             end
         end
     end
-    if nzeros == 0
-        zz = [];
-    else
-    zz = complex(z1', z2');
-    end
-    if npoles == 0
-        pp = [];
-    else
-    pp = complex(p1', p2');
-    end
+    
     % fill in missing poles and zeros
     if (length(zz) < nzeros)
-        for n=length(zz)+1:nzeros
-            zz(n) = 0+0i;
+        for j=length(zz)+1:nzeros
+            zz(j) = 0+0i;
         end
     end
     if (length(pp) < npoles)
-        for n=length(pp)+1:npoles
-            pp(n) = 0+0i;
+        for j=length(pp)+1:npoles
+            pp(j) = 0+0i;
         end
     end
     
