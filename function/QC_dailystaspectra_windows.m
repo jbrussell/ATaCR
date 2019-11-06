@@ -21,7 +21,7 @@ for ic = 1:4
     if comp_exist(ic)==0
         continue
     end
-    [spect_D,FD,TD] = spectrogram(datraw(:,ic),flat_hanning(tt(1:npts),overlap*dt*npts),overn,npts,samprate,'yaxis');
+    [spect_D,FD,TD] = spectrogram(datraw(:,ic),flat_hanning(tt(1:npts),overlap*dt*npts),floor(overn),npts,samprate,'yaxis');
     [HD1min,HD1in] = min(abs(FD-1));
     cdmax = max(max(log(abs(spect_D(1:HD1in,:)))));
     cdmin = min(min(log(abs(spect_D(1:HD1in,:)))));
@@ -115,10 +115,9 @@ end
 %%
 if isfigure
 figure(96)
-cp = subplot(919);
-plot(TD(goodwins),1,'kp');  xlim([0 86400]);
-xlabel('Seconds');
-set(cp,'YTickLabel',[]);
+subplot(919)
+plot(TD(goodwins),1,'p');  xlim([0 86400]);
+xlabel('Seconds')
 end
 
 end

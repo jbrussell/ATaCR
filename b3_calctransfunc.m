@@ -5,9 +5,9 @@
 
 clear all; close all
 
-isfigure = 1;
-issavefigure = 1;
-isoverwrite =1;
+isfigure = 1; %0;
+issavefigure = 1; %0;
+isoverwrite =0;
 
 %%%%%% DO NOT EDIT BELOW %%%%%%%
 setup_parameter;

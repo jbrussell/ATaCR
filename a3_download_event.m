@@ -11,18 +11,18 @@ clear all;
 
 javaaddpath('IRIS-WS-2.0.6.jar');
 
-startlist = 'NOISETC_CI/eventtimes_CItest.txt'; % list of start times for data download, this will be the beginning of the waveform so specify appropriately, signal of interest should not be at edges of time series
-datalength = 7200; % length of time series after each start time in seconds (default 7200, code not thoroughly tested for other values)
+startlist = './ENAM/event_starttimes.txt'; %'NOISETC_SAMPLE2/eventtimes_ENAMtest.txt'; % list of start times for data download, this will be the beginning of the waveform so specify appropriately, signal of interest should not be at edges of time series
+datalength = 6001; %7200; % length of time series after each start time in seconds (default 86400, code not thoroughly tested for other values)
 
-download_networks = '7D'; % list of networks to download
-download_stations = 'M08A'; % list of stations to download (* for all)
+download_networks = 'YO'; % list of networks to download
+download_stations = textread('./ENAM/stalist_good.txt','%s'); %'B02B'; % list of stations to download (* for all)
 % Channel Names
-chz_vec = 'BHZ'; % list of acceptable names for Z component
-ch1_vec = 'BH1'; % list of acceptable names for H1 component
-ch2_vec = 'BH2'; % list of acceptable names for H2 component
-chp_vec = 'BDH'; % list of acceptable names for P component
+chz_vec = 'LHZ'; %'HHZ,BHZ'; % list of acceptable names for Z component
+ch1_vec = 'LH1'; %'HH1,BH1'; % list of acceptable names for H1 component
+ch2_vec = 'LH2'; %'HH2,BH2'; % list of acceptable names for H2 component
+chp_vec = 'LDH'; %'HDH,BDH'; % list of acceptable names for P component
 
-datacache = 'NOISETC_CI/DATA/datacache'; % output folder for data
+datacache = './ENAM/DATA/EVENT/'; %'NOISETC_SAMPLE2/DATA/datacache'; % output folder for data
 
 %%%%% end user input parameters %%%%%
 

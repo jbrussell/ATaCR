@@ -4,22 +4,21 @@
 clear all; close all
 
 isfigure_sta = 1;
+isfigure_spectra = 1;
 issavefigure = 1;
-isoverwrite =1;
+isoverwrite =0;
 
 T1 = 10; T2= 150; %filter period range for plotting seismic data
 
-inpath_event = 'NOISETC_SAMPLE_CI/DATA/datacache_prepro/'; % path to earthquake data (data to be corrected)
+inpath_event = '/data/irma6/jrussel/YoungPacificORCA/TILTCOMP_NEW/ORCA_detrend/DATA/EVENT_preprocess/'; %'NOISETC_SAMPLE/DATA/datacache_prepro/'; % path to earthquake data (data to be corrected)
 
 % input lists of stations with bad components, file doesn't have to exists
 % leave as default if no bad stations
-badstalist = 'NOISETC_SAMPLE_CI/Bad_Z.txt';
-badhorzlist = 'NOISETC_SAMPLE_CI/Bad_H.txt';
-badpreslist = 'NOISETC_SAMPLE_CI/Bad_P.txt';
+badstalist = 'NOISETC_SAMPLE/Bad_Z.txt';
+badhorzlist = 'NOISETC_SAMPLE/Bad_H.txt';
+badpreslist = 'NOISETC_SAMPLE/Bad_P.txt';
 
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %%
-%% %%%%%%%%%%%%%%%%%%%%%%%%% DO NOT EDIT BELOW %%%%%%%%%%%%%%%%%%%%%%%%% %%
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %%
+%%%%% DO NOT EDIT BELOW %%%%%%%%
 setup_parameter;
 
 if exist(badstalist)
@@ -107,8 +106,13 @@ for ie = 1:length(event_filename)
             outpath = sprintf('%s/CORRSEISAVTF/%s/',OUTdir,netsta);
             figoutpath=sprintf('%s/CORREVENTS',FIGdir);
         end
+        
+        if ~isoverwrite && exist(sprintf('%s/%s_%s_corrseis.mat',outpath,netsta,eventid))==2
+            disp([eventid,' exists. Skipping...'])
+            continue
+        end
                 
-        [Zraw,H1raw,H2raw,Praw,taxisZ,taxis1,taxis2,taxisP,dt] = varsetup_correctevent(sta,chz_vec,ch1_vec,ch2_vec,chp_vec);
+        [Zraw,H1raw,H2raw,Praw,taxisZ,taxis1,taxis2,taxisP,dt] = varsetup_correctevent(sta,chz_vec,ch1_vec,ch2_vec,chp_vec,T);
         if isnan(Zraw);
             continue
         end
@@ -295,6 +299,21 @@ for ie = 1:length(event_filename)
                 end
             end
         end
+        % JBR
+        if isfigure_spectra
+            plot_corrspectra_jbr(T1,T2,Zraw,corrseis,f,NFFT,dt,taxisZ,eventid,netsta,lp,hp)
+            if issavefigure==1
+                if tf_op ==1
+                    figure(1)
+                    filename=sprintf('%s/%s_%s_spectra',figoutpath,eventid,netsta);
+                    print(gcf,'-dpng',filename)
+                elseif tf_op==2
+                    figure(1)
+                    filename=sprintf('%s/%s_%s_spectra_av',figoutpath,eventid,netsta);
+                    print(gcf,'-dpng',filename)
+                end
+            end
+        end
+        
     end
-    
 end
