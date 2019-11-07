@@ -1,8 +1,8 @@
-This branch of ATaCR is built from a pre-release version of the package that is nearly identical to the current `master` branch. Most of the changes made were just for the sake of convenience and ideally will be merged into master eventually.
+This branch of ATaCR is built from a pre-release version of the package that is nearly identical to the current `master` branch. Most of the changes made were just for the sake of convenience and ideally will be merged into `master` eventually.
 
 ---
 
-Main changes:
+Main changes from `master`:
 - Specify a station list to loop over rather than running each station individually.
 - Rename the files alphanumerically to clarify their order
 - Add script to make the list of start times from the event list `a0_make_starttimes.m`
