@@ -1,9 +1,0 @@
-NOTES ABOUT PACKAGE
-
-- The daily spectra seem to work better than the station average for removing tilt and compliance noise
-	i.e. tf_op = 1
-
-
-The setup for this version assumes that data (both daily and event waveforms) has already been downloaded into sac format, down sampled, and instrument response removed (to units of meters for BHZ, BH1, and BH2 and units of Pa for BDH). Daily files are 24 hours long, and event files are 6000 seconds.
-
-To see how the package operates from data download through to corrected seismograms, see /Users/jrussel/RESEARCH/PROJ_ENAM/TILTCOMP_NEW/NoiseTiltComp_pkg/EVENT/
