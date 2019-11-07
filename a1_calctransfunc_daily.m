@@ -8,7 +8,7 @@
 
 clear;
 % addpath ( '../EVTDATA_COMPLIANCE/');
-parameter_tilt_evtbase;
+setup_parameters;
 
 dbpath = WORKINGdir; %'/Users/helenj/Cascadia/EARTHQUAKES/YEAR3/COMPLIANCESED/J42C/';
 outpath = compliancematpath; %['/Users/jrussel/RESEARCH/PROJ_ENAM/TILTCOMP/OUT_DAYBASE/',PROJ,'/']; %'/Users/helenj/Cascadia/EARTHQUAKES/COMPLIANCE/';

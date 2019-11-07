@@ -15,7 +15,7 @@
 
 
 clear all;
-parameter_tilt_evtbase;
+setup_parameters;
 
 isfigure = 1; 
 iscompliance = 1; % 1 for tilt & compliance; 0 for tilt only
