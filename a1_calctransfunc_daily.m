@@ -50,8 +50,8 @@ for ista = 1: length(stalist) % 8:8  %12: 12 %length(Zsaclist)
     list1 = dir([dbpath,staname,'/*',chz,'.sac']);
     for iday = 1 : length(list1)
         file1 = list1(iday).name;
-        s = file1(6:22);        
-%         s = num2str(iday,'%03d');
+        str = strsplit(file1,'.');
+        s = [str{2},'.',str{3},'.',str{4},'.',str{5},'.',str{6}];
         if exist([evtoutpath,staname,'/',staname,'_',s,'_compliance.mat'])
             display(['skipping ',staname,' ',s]);
             continue
