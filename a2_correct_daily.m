@@ -96,8 +96,10 @@ for ista = 1: length(stalist) % 8:8  %12: 12 %length(Zsaclist)
         if isequal(evtsac_nptsZ, evtsac_nptsH1, evtsac_nptsH2, evtsac_nptsP)
             evtsac_npts = Z.NPTS;
         else
-            [sortpts,I]=sort(npts);
-            evtsac_npts = sortpts(1); %This assumes they all have the same start time, but differing end times and will just cut off the longer traces.
+            display(['Number of points in Z,H1,H2,P do not match up... skipping'])
+            continue
+            % [sortpts,I]=sort(npts);
+            % evtsac_npts = sortpts(1); %This assumes they all have the same start time, but differing end times and will just cut off the longer traces.
         end
         
         clear l1Z l12 l1P l2P_1 l2Z_1 lPZ_12
